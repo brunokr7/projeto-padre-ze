@@ -15,3 +15,4 @@ O SGPD é um MVP desenvolvido para otimizar a triagem e o atendimento social, ga
 - `schemas.py`: Schemas Pydantic para validação de entrada e saída.
 - `main.py`: Endpoints da API (login, consulta por CPF, cadastro e registro de triagem).
 - `index.html`: Interface web prototipada com as 3 telas principais.
+* Atualização para validação de Pull Request
