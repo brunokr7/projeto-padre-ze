@@ -6,9 +6,9 @@
 ## 📌 Visão Geral
 O **SGPD** é um MVP de software desenvolvido por **Bruno** para otimizar o fluxo de triagem e o atendimento social na Instituição Beneficente Padre Zé. O sistema foca em eficiência operacional, segurança de dados e acessibilidade digital (WCAG 2.1 AA), sustentando diretamente os objetivos da **Meta 2.1 do ODS 2 (Fome Zero e Agricultura Sustentável)**.
 
-## 👥 Equipe e Validação
+## 👥 Equipe
 * **Desenvolvedor / Responsável Técnico:** Bruno
-* **Representante / Coordenadora Parceira:** Maria da Silva Oliveira (Coordenadora de Atendimento Social e Recepção)
+
 
 ## 🛠️ Stack Tecnológica
 * **Backend:** FastAPI, Python, Pydantic, SQLAlchemy, Uvicorn, Bcrypt
