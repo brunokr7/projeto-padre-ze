@@ -10,6 +10,21 @@ jobs:
   build-and-test:
     runs-on: ubuntu-latest
 
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_USER: usuario
+          POSTGRES_PASSWORD: senha
+          POSTGRES_DB: sgpd_db
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     steps:
     - name: Copiar código do repositório
       uses: actions/checkout@v4
@@ -22,8 +37,8 @@ jobs:
     - name: Instalar dependências
       run: |
         python -m pip install --upgrade pip
-        pip install fastapi sqlalchemy pydantic bcrypt pytest httpx
+        pip install fastapi sqlalchemy pydantic bcrypt pytest httpx psycopg2-binary
 
-    - name: Validar integridade dos módulos do projeto
+    - name: Validar integridade dos módulos e conexão com Banco
       run: |
-        python -c "import database, models, schemas, main; print('Todos os modulos carregados com sucesso!')"
+        python -c "import database, models, schemas, main; print('Todos os modulos carregados e banco conectado com sucesso!')"
