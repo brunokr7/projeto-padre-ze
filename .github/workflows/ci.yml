@@ -1,0 +1,29 @@
+name: CI Pipeline SGPD
+
+on:
+  push:
+    branches: [ main, feature/revisao-tecnica-mvp ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Copiar código do repositório
+      uses: actions/checkout@v4
+
+    - name: Configurar ambiente Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+
+    - name: Instalar dependências
+      run: |
+        python -m pip install --upgrade pip
+        pip install fastapi sqlalchemy pydantic bcrypt pytest httpx
+
+    - name: Validar integridade dos módulos do projeto
+      run: |
+        python -c "import database, models, schemas, main; print('Todos os modulos carregados com sucesso!')"
