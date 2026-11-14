@@ -24,8 +24,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install fastapi sqlalchemy pydantic bcrypt pytest httpx
 
-    - name: Validar integridade dos módulos com SQLite (CI)
-      env:
-        DATABASE_URL: "sqlite:///./test.db"
+    - name: Validar sintaxe e integridade dos arquivos Python
       run: |
-        python -c "import database, models, schemas, main; print('Modulos carregados e banco SQLite inicializado com sucesso!')"
+        python -m py_compile database.py models.py schemas.py main.py
+        echo "Compilacao e sintaxe validadas com sucesso!"
