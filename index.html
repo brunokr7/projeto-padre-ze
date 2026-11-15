@@ -1,207 +1,196 @@
 <!DOCTYPE html>
-<html lang="pt-BR" class="h-full bg-gray-50">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SGPD - Sistema de Gestão e Triagem Operacional</title>
-    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        brand: {
-                            50: '#eff6ff',
-                            100: '#dbeafe',
-                            600: '#2563eb',
-                            700: '#1d4ed8',
-                            800: '#1e40af',
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        /* Suporte a transições suaves para acessibilidade */
-        * { transition: background-color 0.2s ease, color 0.2s ease; }
-    </style>
 </head>
-<body class="h-full font-sans antialiased text-gray-900 bg-gray-50" id="app-body">
+<body class="bg-slate-950 text-slate-100 flex h-screen overflow-hidden">
+    
+    <!-- Barra Lateral (Sidebar) -->
+    <aside class="w-64 bg-slate-900 border-r border-slate-800 flex flex-col justify-between">
+        <div>
+            <div class="p-6 flex items-center space-x-3 border-b border-slate-800">
+                <span class="text-xl font-bold tracking-wider text-blue-400">SGPD</span>
+                <span class="text-xs bg-blue-900 text-blue-200 px-2 py-0.5 rounded-full font-medium">Padre Zé</span>
+            </div>
+            <nav class="space-y-1 px-3 mt-6">
+                <a href="#" onclick="mostrarSecao('secao-dashboard', event)" class="flex items-center px-4 py-3 text-sm font-medium bg-slate-800 text-white rounded-xl transition-colors">
+                    📊 Dashboard / Triagem
+                </a>
+                <a href="#" onclick="mostrarSecao('secao-beneficiarios', event)" class="flex items-center px-4 py-3 text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-white rounded-xl transition-colors">
+                    👥 Beneficiários
+                </a>
+                <a href="#" onclick="mostrarSecao('secao-relatorios', event)" class="flex items-center px-4 py-3 text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-white rounded-xl transition-colors">
+                    📋 Relatórios ODS 2
+                </a>
+            </nav>
+        </div>
+        <div class="p-4 border-t border-slate-800 text-xs text-slate-400">
+            <p class="font-semibold text-slate-200">Operador: Bruno</p>
+            <p class="flex items-center mt-1"><span class="w-2 h-2 bg-emerald-500 rounded-full inline-block mr-1.5"></span> Sistema Online</p>
+        </div>
+    </aside>
 
-    <!-- Notificações Flutuantes (Toast) na zona de foco visual -->
-    <div id="toast-container" class="fixed top-5 right-5 z-50 flex flex-col gap-3"></div>
+    <!-- Área Principal -->
+    <div class="flex-1 flex flex-col overflow-hidden bg-slate-900">
+        <!-- Topbar -->
+        <header class="bg-slate-900 border-b border-slate-800 h-16 flex items-center justify-between px-8">
+            <h1 class="text-lg font-semibold text-white">Painel Operacional de Atendimento</h1>
+            <div class="flex items-center space-x-3">
+                <button class="bg-slate-800 hover:bg-slate-700 text-xs px-3 py-1.5 rounded-lg border border-slate-700 transition-colors">Contraste</button>
+                <button class="bg-slate-800 hover:bg-slate-700 text-xs px-3 py-1.5 rounded-lg border border-slate-700 transition-colors">Fonte</button>
+            </div>
+        </header>
 
-    <div class="min-h-full flex">
-        
-        <!-- Sidebar de Navegação -->
-        <aside class="hidden md:flex md:flex-shrink-0">
-            <div class="flex flex-col w-64 bg-slate-900 border-r border-slate-800">
-                <div class="flex items-center h-16 px-6 bg-slate-950">
-                    <span class="text-xl font-bold tracking-wider text-white">SGPD <span class="text-blue-500 text-xs px-2 py-0.5 bg-blue-950 rounded-full border border-blue-800">Padre Zé</span></span>
+        <!-- Conteúdo Deslizando -->
+        <main class="flex-1 overflow-y-auto p-8 bg-slate-950">
+            
+            <!-- SEÇÃO 1: DASHBOARD / TRIAGEM -->
+            <div id="secao-dashboard" class="space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-slate-900 p-6 rounded-2xl border border-slate-800 shadow-sm">
+                        <p class="text-xs font-medium text-slate-400 uppercase tracking-wider">Triagens Hoje</p>
+                        <h3 class="text-3xl font-bold text-white mt-2">42</h3>
+                        <span class="text-xs text-emerald-400 font-medium mt-1 inline-block">↑ 12% vs ontem</span>
+                    </div>
+                    <div class="bg-slate-900 p-6 rounded-2xl border border-slate-800 shadow-sm">
+                        <p class="text-xs font-medium text-slate-400 uppercase tracking-wider">Auxílios Concedidos</p>
+                        <h3 class="text-3xl font-bold text-white mt-2">128</h3>
+                        <span class="text-xs text-blue-400 font-medium mt-1 inline-block">Meta ODS 2 Ativa</span>
+                    </div>
+                    <div class="bg-slate-900 p-6 rounded-2xl border border-slate-800 shadow-sm">
+                        <p class="text-xs font-medium text-slate-400 uppercase tracking-wider">Fila de Atendimento</p>
+                        <h3 class="text-3xl font-bold text-white mt-2">7</h3>
+                        <span class="text-xs text-amber-400 font-medium mt-1 inline-block bg-amber-950/50 px-2 py-0.5 rounded">Aguardando análise</span>
+                    </div>
                 </div>
-                <div class="flex flex-col flex-grow px-4 py-6 space-y-2">
-                    <a href="#" class="flex items-center px-4 py-3 text-sm font-medium text-white bg-blue-600 rounded-xl shadow-sm">
-                        📊 Dashboard / Triagem
-                    </a>
-                    <a href="#" class="flex items-center px-4 py-3 text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-white rounded-xl transition-colors">
-                        👥 Beneficiários
-                    </a>
-                    <a href="#" class="flex items-center px-4 py-3 text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-white rounded-xl transition-colors">
-                        📋 Relatórios ODS 2
-                    </a>
-                </div>
-                <!-- Rodapé da Sidebar / Info do Operador -->
-                <div class="p-4 bg-slate-950 border-t border-slate-800 text-xs text-slate-400 flex items-center justify-between">
-                    <div>
-                        <p class="font-semibold text-slate-200">Operador: Bruno</p>
-                        <p class="text-emerald-400">● Sistema Online</p>
+
+                <div class="bg-slate-900 rounded-2xl border border-slate-800 p-6 shadow-sm">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-base font-semibold text-white">Nova Triagem de Beneficiário</h2>
+                        <button onclick="simularAcao()" class="bg-blue-600 hover:bg-blue-500 text-white text-xs px-4 py-2 rounded-xl transition-colors font-medium">Simular Ação Rápida</button>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-xs font-medium text-slate-300 mb-2">CPF do Beneficiário</label>
+                            <input type="text" id="input-cpf" placeholder="000.000.000-00" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-slate-300 mb-2">Nível de Vulnerabilidade</label>
+                            <select class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500">
+                                <option>Extrema Vulnerabilidade (Prioridade ODS 2)</option>
+                                <option>Vulnerabilidade Moderada</option>
+                                <option>Em Risco Social</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mt-6">
+                        <label class="block text-xs font-medium text-slate-300 mb-2">Observações Sociais / Histórico</label>
+                        <textarea rows="3" placeholder="Digite detalhes sobre a composição familiar e necessidade de mantimentos..." class="w-full bg-slate-950 border border-slate-800 rounded-xl p-4 text-sm text-white focus:outline-none focus:border-blue-500"></textarea>
+                    </div>
+                    <div class="flex justify-end space-x-3 mt-6">
+                        <button class="px-5 py-2.5 rounded-xl border border-slate-800 text-sm text-slate-300 hover:bg-slate-800 transition-colors">Limpar</button>
+                        <button onclick="salvarTriagem()" class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-medium transition-colors">Salvar Triagem</button>
                     </div>
                 </div>
             </div>
-        </aside>
 
-        <!-- Conteúdo Principal -->
-        <div class="flex flex-col flex-1 min-w-0 overflow-hidden">
-            
-            <!-- Topbar Superior com Controles de Acessibilidade -->
-            <header class="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-6 shadow-xs">
-                <div class="flex items-center gap-4">
-                    <h1 class="text-lg font-bold text-gray-800">Painel Operacional de Atendimento</h1>
-                </div>
-                
-                <!-- Ferramentas de Acessibilidade WCAG 2.1 AA -->
-                <div class="flex items-center gap-3">
-                    <button onclick="toggleHighContrast()" class="px-3.5 py-1.5 text-xs font-semibold bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg border border-gray-300 shadow-2xs flex items-center gap-1.5 cursor-pointer" aria-label="Alternar Alto Contraste">
-                        🌓 Contraste
-                    </button>
-                    <button onclick="toggleFontSize()" class="px-3.5 py-1.5 text-xs font-semibold bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg border border-gray-300 shadow-2xs flex items-center gap-1.5 cursor-pointer" aria-label="Aumentar Fonte">
-                        🔤 Fonte
-                    </button>
-                </div>
-            </header>
+            <!-- SEÇÃO 2: BENEFICIÁRIOS -->
+            <div id="secao-beneficiarios" class="hidden space-y-6">
+                <div class="bg-slate-900 rounded-2xl border border-slate-800 p-6">
+                    <h2 class="text-base font-semibold text-white mb-4">Consulta de Beneficiários Cadastrados</h2>
+                    <p class="text-sm text-slate-400 mb-6">Consulte fichas cadastrais e histórico de auxílios alimentares vinculados ao ODS 2.</p>
+                    
+                    <div class="flex gap-4 mb-6">
+                        <input type="text" placeholder="Pesquisar por CPF ou Nome..." class="flex-1 bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500">
+                        <button class="bg-blue-600 hover:bg-blue-500 text-white px-5 py-2.5 rounded-xl text-sm font-medium transition-colors">Pesquisar</button>
+                    </div>
 
-            <!-- Área de Trabalho com Scroll -->
-            <main class="flex-1 overflow-y-auto p-6 lg:p-8">
-                
-                <!-- Cards de Métricas Rápidas -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                    <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-xs">
-                        <p class="text-xs font-semibold tracking-wider text-gray-500 uppercase">Triagens Hoje</p>
-                        <p class="text-3xl font-bold text-gray-900 mt-2">42</p>
-                        <span class="text-xs font-medium text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-md mt-2 inline-block">↑ 12% vs ontem</span>
-                    </div>
-                    <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-xs">
-                        <p class="text-xs font-semibold tracking-wider text-gray-500 uppercase">Auxílios Concedidos</p>
-                        <p class="text-3xl font-bold text-gray-900 mt-2">128</p>
-                        <span class="text-xs font-medium text-blue-600 bg-blue-50 px-2 py-0.5 rounded-md mt-2 inline-block">Meta ODS 2 Ativa</span>
-                    </div>
-                    <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-xs">
-                        <p class="text-xs font-semibold tracking-wider text-gray-500 uppercase">Fila de Atendimento</p>
-                        <p class="text-3xl font-bold text-amber-600 mt-2">7</p>
-                        <span class="text-xs font-medium text-amber-700 bg-amber-50 px-2 py-0.5 rounded-md mt-2 inline-block">Aguardando análise</span>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-sm text-slate-300">
+                            <thead class="bg-slate-950 text-xs uppercase text-slate-400 border-b border-slate-800">
+                                <tr>
+                                    <th class="px-4 py-3">Nome</th>
+                                    <th class="px-4 py-3">CPF</th>
+                                    <th class="px-4 py-3">Vulnerabilidade</th>
+                                    <th class="px-4 py-3">Status</th>
+                                    <th class="px-4 py-3 text-right">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-800">
+                                <tr>
+                                    <td class="px-4 py-3 font-medium text-white">Maria da Silva Santos</td>
+                                    <td class="px-4 py-3 font-mono text-xs">123.456.789-00</td>
+                                    <td class="px-4 py-3"><span class="bg-red-950 text-red-300 px-2 py-0.5 rounded text-xs">Extrema</span></td>
+                                    <td class="px-4 py-3"><span class="text-emerald-400 text-xs">Ativo</span></td>
+                                    <td class="px-4 py-3 text-right"><button class="text-blue-400 hover:underline text-xs">Ver Ficha</button></td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3 font-medium text-white">José Francisco Oliveira</td>
+                                    <td class="px-4 py-3 font-mono text-xs">987.654.321-11</td>
+                                    <td class="px-4 py-3"><span class="bg-amber-950 text-amber-300 px-2 py-0.5 rounded text-xs">Moderada</span></td>
+                                    <td class="px-4 py-3"><span class="text-emerald-400 text-xs">Ativo</span></td>
+                                    <td class="px-4 py-3 text-right"><button class="text-blue-400 hover:underline text-xs">Ver Ficha</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
+            </div>
 
-                <!-- Seção Principal: Formulário de Consulta / Triagem -->
-                <div class="bg-white rounded-2xl border border-gray-200 shadow-xs overflow-hidden">
-                    <div class="p-6 border-b border-gray-100 flex items-center justify-between">
-                        <div>
-                            <h2 class="text-base font-bold text-gray-900">Nova Triagem de Beneficiário</h2>
-                            <p class="text-sm text-gray-500">Insira os dados do CPF para consulta rápida no banco de dados local.</p>
+            <!-- SEÇÃO 3: RELATÓRIOS ODS 2 -->
+            <div id="secao-relatorios" class="hidden space-y-6">
+                <div class="bg-slate-900 rounded-2xl border border-slate-800 p-6">
+                    <h2 class="text-base font-semibold text-white mb-4">Relatórios de Impacto - ODS 2 (Fome Zero e Agricultura Sustentável)</h2>
+                    <p class="text-sm text-slate-400 mb-6">Métricas consolidadas de distribuição de cestas básicas, atendimento nutricional e combate à insegurança alimentar em João Pessoa e região.</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-slate-950 p-5 rounded-xl border border-slate-800">
+                            <h3 class="text-sm font-semibold text-white mb-2">Cestas Básicas Entregues (Mês Atual)</h3>
+                            <div class="text-3xl font-bold text-blue-400 mt-2">1.420 unidades</div>
+                            <p class="text-xs text-slate-400 mt-2">Aumento de 18% em relação ao mês anterior.</p>
                         </div>
-                        <button onclick="triggerToast('Consulta realizada com sucesso!', 'success')" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-xl shadow-xs transition-all cursor-pointer">
-                            Simular Ação Rápida
-                        </button>
+                        <div class="bg-slate-950 p-5 rounded-xl border border-slate-800">
+                            <h3 class="text-sm font-semibold text-white mb-2">Famílias Atendidas com Apoio Nutricional</h3>
+                            <div class="text-3xl font-bold text-emerald-400 mt-2">512 famílias</div>
+                            <p class="text-xs text-slate-400 mt-2">Meta trimestral atingida em 94%.</p>
+                        </div>
                     </div>
-
-                    <!-- Formulário Exemplo com Sticky Action Bar simulada -->
-                    <form onsubmit="event.preventDefault(); triggerToast('Dados salvos com sucesso!', 'success');" class="p-6 space-y-6">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label class="block text-sm font-semibold text-gray-700 mb-2">CPF do Beneficiário</label>
-                                <input type="text" placeholder="000.000.000-00" class="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-600 focus:border-blue-600 outline-none text-sm bg-gray-50/50">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-semibold text-gray-700 mb-2">Nível de Vulnerabilidade</label>
-                                <select class="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-600 focus:border-blue-600 outline-none text-sm bg-gray-50/50">
-                                    <option>Extrema Vulnerabilidade (Prioridade ODS 2)</option>
-                                    <option>Vulnerabilidade Moderada</option>
-                                    <option>Cadastro Regular</option>
-                                </select>
-                            </div>
-                            <div class="md:col-span-2">
-                                <label class="block text-sm font-semibold text-gray-700 mb-2">Observações Sociais / Histórico</label>
-                                <textarea rows="3" placeholder="Digite detalhes sobre a composição familiar e necessidade de mantimentos..." class="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-600 focus:border-blue-600 outline-none text-sm bg-gray-50/50"></textarea>
-                            </div>
-                        </div>
-
-                        <!-- Sticky Action Bar (Barra de ações fixa na base do card ou formulário) -->
-                        <div class="sticky bottom-0 bg-white pt-4 pb-2 border-t border-gray-100 flex items-center justify-end gap-3">
-                            <button type="reset" class="px-5 py-2.5 text-sm font-semibold text-gray-600 hover:bg-gray-100 rounded-xl transition-colors cursor-pointer">
-                                Limpar
-                            </button>
-                            <button type="submit" class="px-6 py-2.5 text-sm font-semibold bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl shadow-sm transition-all cursor-pointer">
-                                Salvar Triagem
-                            </button>
-                        </div>
-                    </form>
                 </div>
+            </div>
 
-            </main>
-        </div>
+        </main>
     </div>
 
-    <!-- Scripts de Interatividade e Acessibilidade -->
     <script>
-        // Função de Alerta Flutuante (Toast)
-        function triggerToast(message, type = 'success') {
-            const container = document.getElementById('toast-container');
-            const toast = document.createElement('div');
+        function mostrarSecao(secaoId, event) {
+            event.preventDefault();
             
-            const bgColor = type === 'success' ? 'bg-slate-900 text-white border-emerald-500' : 'bg-red-900 text-white border-red-500';
-            
-            toast.className = `flex items-center gap-3 px-5 py-3 rounded-2xl shadow-xl border-l-4 ${bgColor} transform translate-y-2 opacity-0 transition-all duration-300 text-sm font-medium`;
-            toast.innerHTML = `<span>${type === 'success' ? '✅' : '⚠️'}</span> <span>${message}</span>`;
-            
-            container.appendChild(toast);
-            
-            setTimeout(() => {
-                toast.classList.remove('translate-y-2', 'opacity-0');
-            }, 50);
+            // Esconde todas as seções
+            document.getElementById('secao-dashboard').classList.add('hidden');
+            document.getElementById('secao-beneficiarios').classList.add('hidden');
+            document.getElementById('secao-relatorios').classList.add('hidden');
 
-            setTimeout(() => {
-                toast.classList.add('translate-y-2', 'opacity-0');
-                setTimeout(() => toast.remove(), 300);
-            }, 3500);
+            // Remove o estilo ativo de todos os links do menu
+            document.querySelectorAll('aside nav a').forEach(el => {
+                el.classList.remove('bg-slate-800', 'text-white');
+                el.classList.add('text-slate-300');
+            });
+
+            // Mostra a seção selecionada e destaca o botão correspondente
+            document.getElementById(secaoId).classList.remove('hidden');
+            event.currentTarget.classList.add('bg-slate-800', 'text-white');
+            event.currentTarget.classList.remove('text-slate-300');
         }
 
-        // Alternância de Alto Contraste (Acessibilidade WCAG)
-        let highContrast = false;
-        function toggleHighContrast() {
-            highContrast = !highContrast;
-            const body = document.getElementById('app-body');
-            if (highContrast) {
-                body.classList.add('bg-black', 'text-yellow-300');
-                document.querySelectorAll('.bg-white').forEach(el => {
-                    el.style.backgroundColor = '#121212';
-                    el.style.borderColor = '#333';
-                    el.style.color = '#fff';
-                });
-                triggerToast('Modo de Alto Contraste Ativado', 'success');
-            } else {
-                location.reload(); // Recarrega para resetar o estado limpo
-            }
+        function simularAcao() {
+            document.getElementById('input-cpf').value = '789.123.456-88';
         }
 
-        // Alternância de Tamanho de Fonte (Acessibilidade WCAG)
-        let largeFont = false;
-        function toggleFontSize() {
-            largeFont = !largeFont;
-            document.documentElement.style.fontSize = largeFont ? '115%' : '100%';
-            triggerToast(largeFont ? 'Fonte Ampliada' : 'Fonte Padrão', 'success');
+        function salvarTriagem() {
+            alert('Triagem salva com sucesso no banco de dados!');
         }
     </script>
 </body>
