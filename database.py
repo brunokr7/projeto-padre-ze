@@ -3,15 +3,13 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-# Usa SQLite se estiver na esteira de CI, ou PostgreSQL por padrão
-DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://usuario:senha@localhost:5432/sgpd_db")
+# Força o SQLite independentemente de variáveis de ambiente externas
+DATABASE_URL = "sqlite:////tmp/sgpd.db"
 
 engine = create_engine(
-    DATABASE_URL, 
-    connect_args={"check_same_thread": False} if "sqlite" in DATABASE_URL else {}
+    DATABASE_URL, connect_args={"check_same_thread": False}
 )
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-
 Base = declarative_base()
 
 def get_db():
