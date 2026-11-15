@@ -1,6 +1,8 @@
+```text
 fastapi
 uvicorn
 sqlalchemy
 pydantic
+pydantic[email]
 bcrypt
 psycopg2-binary
